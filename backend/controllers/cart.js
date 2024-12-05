@@ -21,7 +21,6 @@ exports.addProduct = async(req, res) => {
     try{
         const productId = req.body.productId
         const quantity = req.body.quantity
-        console.log("productId ===== ", productId)
         const userId = isAuth.userId
         const user = await User.findByPk(userId);
         if (!user) {
@@ -29,7 +28,6 @@ exports.addProduct = async(req, res) => {
         }
 
         let cart = await Cart.findOne({where:{userId:user.id}})
-        console.log("mickkkkkkkkkkk")
         if (!cart){
             cart = await Cart.create({
                 userId:user.id

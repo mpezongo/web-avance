@@ -1,5 +1,6 @@
 import { createBrowserRouter,RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
+import AdminDashboard from "./pages/adminDashboard";
 
 function App() {
   const path = createBrowserRouter([
@@ -7,6 +8,10 @@ function App() {
       path: "/",
       element: <Home />,
     },
+    {
+      path:'/adminDashboard',
+      element: <AdminDashboard />
+    }
   ])
   return (
     <div>

@@ -45,6 +45,7 @@ app.use('/products', productsRouter)
 app.use('/cart', cartRouter)
 app.use('/favorite', favoriteRouter)
 app.use("/img", uploadFile.single("file"), routerSendImg)
+app.use("/static/img", express.static("file/productImg"))
 
 
 app.listen(5000, () => {

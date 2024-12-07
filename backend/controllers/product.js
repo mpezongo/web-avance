@@ -103,7 +103,8 @@ exports.modify = async(req, res) => {
         })
     }
     const id = req.params.id
-    const {name, desc, price, categorie, img, stock} = req.body
+    const {name, desc, price, categorie, stock} = req.body.productData
+    const img = req.body.img
     try{
         const product = await Product.findByPk(id)
         if (!product){

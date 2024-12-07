@@ -93,9 +93,9 @@ export default function AdminProduct() {
                     <div className='text-start font-Montserrat w-[15%]'>
                       {product.stock}
                     </div>
-                    <button className='text-blue-600 font-semibold text-start font-Montserrat w-[15%]'>
+                    <NavLink to={"/modifyProduct?productId=" + product.id} className='text-blue-600 font-semibold text-start font-Montserrat w-[15%]'>
                       Editer
-                    </button>
+                    </NavLink>
                     <button onClick={() => delProduct(product.id)}  className='text-red-500 font-semibold text-start font-Montserrat w-[15%]'>
                       Supprimer
                     </button>

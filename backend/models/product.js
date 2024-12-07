@@ -10,7 +10,8 @@ module.exports = (sequelize, Sequelize) => {
         },
         stock:{
             type:Sequelize.INTEGER,
-            allowNull:true
+            allowNull:true,
+            default:0
         },
         img:{
             type:Sequelize.STRING,

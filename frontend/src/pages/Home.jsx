@@ -6,19 +6,19 @@ export default function Home() {
 
     const handleSend = async() => {
         try{
-            const res = await axios.get("http://localhost:5000/favorite/", 
-            //   {
-            //     // "username":"mpezongo",
-            //     // "email":"mickael.pezongo@gmail.com",
-            //     // "password":"1234",
-            //     // name:'Un habit bien neud',
-            //     // price:1426,
-            //     // desc:'Ce produit est tres special',
-            //     // categorie:'habit',
-            //     productId:4,
-            //     // quantity:8
+            const res = await axios.post("http://localhost:5000/users/login", 
+              {
+                "username":"mpezongo",
+                "email":"mickael.pezongo@gmail.com",
+                "password":"1234",
+                name:'Un habit bien neud',
+                price:1426,
+                desc:'Ce produit est tres special',
+                categorie:'habit',
+                productId:4,
+                // quantity:8
 
-            // },
+            },
             {
                 withCredentials:true
             })

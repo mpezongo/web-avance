@@ -1,9 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-export default function Letfbar() {
+export default function Leftbar() {
   return (
-    <div className='h-screen left-0 w-1/6 bg-blue-800 flex flex-col justify-start items-center pt-10'>
+    <div className='h-screen left-0 w-1/5 bg-blue-800 flex flex-col justify-start items-center pt-10'>
       <div className='text-4xl text-white font-Montserrat w-5/6'>
         Admin Dashboard
       </div>

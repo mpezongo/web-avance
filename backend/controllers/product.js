@@ -1,7 +1,6 @@
 const db = require("../models/db")
 const authenticate = require('./authenticate')
 const Product = db.product
-const Users = db.user
 
 exports.add = async(req, res) => {
     const token = req.cookies.token
@@ -20,14 +19,15 @@ exports.add = async(req, res) => {
             message:'Forbidden action'
         })
     }
-    const {name, desc, price, stock, img, categorie} = req.body
+    const {name, desc, price, stock, categorie} = req.body.productData
+    const img = req.body.img
     if (!name) return res.status(403).json({
         message:'Un produit doit avoir au moins un nom'
     })
 
     const product = {
         name:name,
-        des:desc,
+        desc:desc,
         price:price,
         stock:stock,
         categorie:categorie,
@@ -41,7 +41,6 @@ exports.add = async(req, res) => {
             })
         })
         .catch(error => {
-            console.log(error)
             res.status(500).json({
                 message:'Une erreur s\'est produite'
             })

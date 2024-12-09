@@ -6,7 +6,6 @@ const Cart = db.cart
 const CartProducts = db.cartProducts
 
 exports.addProduct = async(req, res) => {
-    console.log('on est la')
     const token = req.cookies.token
     const isAuth = await authenticate(token)
     if (!isAuth){

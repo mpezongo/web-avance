@@ -8,10 +8,10 @@ export default function Leftbar() {
         Admin Dashboard
       </div>
       <div className='mt-20 flex flex-col w-full gap-4 justify-center items-center'>
-        <NavLink className="text-xl font-Montserrat text-white w-5/6 h-12 flex justify-start px-4 items-center hover:bg-blue-700">
+        <NavLink to='/adminDashboard' className="text-xl font-Montserrat text-white w-5/6 h-12 flex justify-start px-4 items-center hover:bg-blue-700">
           Tableau de bord
         </NavLink>
-        <NavLink className="text-xl font-Montserrat text-white w-5/6 h-12 flex justify-start px-4 items-center hover:bg-blue-700">
+        <NavLink to='/adminProduct' className="text-xl font-Montserrat text-white w-5/6 h-12 flex justify-start px-4 items-center hover:bg-blue-700">
           Produits
         </NavLink>
         <NavLink className="text-xl font-Montserrat text-white w-5/6 h-12 flex justify-start px-4 items-center hover:bg-blue-700">

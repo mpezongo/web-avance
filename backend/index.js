@@ -6,6 +6,7 @@ const usersRouter = require('./routes/users')
 const productsRouter = require('./routes/product')
 const cartRouter = require('./routes/cart')
 const favoriteRouter = require('./routes/favorites')
+const commandesRouter = require('./routes/commandes')
 const routerSendImg = require('./routes/img')
 const multer = require("multer");
 
@@ -44,6 +45,7 @@ app.use("/users", usersRouter)
 app.use('/products', productsRouter)
 app.use('/cart', cartRouter)
 app.use('/favorite', favoriteRouter)
+app.use('/commandes', commandesRouter)
 app.use("/img", uploadFile.single("file"), routerSendImg)
 app.use("/static/img", express.static("file/productImg"))
 

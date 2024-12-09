@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import AdminProduct from "./pages/adminProduct";
 import AddProduct from "./pages/addProduct";
 import ModifyProduct from "./pages/modifyProduct";
+import AdminDashboard from "./pages/adminDashboard";
 
 function App() {
   const path = createBrowserRouter([
@@ -21,6 +22,10 @@ function App() {
     {
       path:'/modifyProduct',
       element: <ModifyProduct />
+    },
+    {
+      path:'/adminDashboard',
+      element: <AdminDashboard />
     },
   ])
   return (

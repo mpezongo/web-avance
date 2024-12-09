@@ -9,6 +9,6 @@ module.exports = (sequelize, DataTypes) => {
     CartProducts.associate = (models) => {
       CartProducts.belongsTo(models.Cart, { foreignKey: 'cartId'});
       CartProducts.belongsTo(models.Product, { foreignKey: 'productId'});
-  };
+    };
     return CartProducts;
 };

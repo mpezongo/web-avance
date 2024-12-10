@@ -60,7 +60,19 @@ exports.getCommande = async(req, res) => {
     }
 
     try{
-        const commandes = await Commandes.findAll()
+        const commandes = await Commandes.findAll(
+            {
+                include:[
+                    {
+                        model:Product,
+                    },
+                    {
+                        model:User,
+                        attributes: ['username'],
+                    }
+                ]
+            }
+        )
         res.status(200).json(commandes)
     }catch(error) {
         console.log(error)
@@ -112,6 +124,60 @@ exports.deleteCommande = async(req, res) => {
             res.status(200).json({message:'Commandes supprimée avec succès'})
         }else{
             res.status(403).json({message:"Cette commande n'existe pas"})
+        }
+    }catch(error){
+        console.log(error)
+    }
+}
+
+exports.getCommandeById = async(req, res) => {
+    const token = req.cookies.token
+    const isAuth = await authenticate(token)
+    if (!isAuth){
+        return res.status(401).json({
+            message:'Not authorized'
+        })
+    }else if (isAuth === 'isOutDated'){
+        return res.status(401).json({
+            message:'Not authorized'
+        })
+    }
+
+    try{
+        const commandeId = req.params.id
+        const commande = await Commandes.findOne({where:{id:commandeId}})
+        res.status(200).json(commande)
+    }catch(error){
+        console.log(error)
+    }
+}
+
+exports.updateCommande = async(req, res) => {
+    const token = req.cookies.token
+    const isAuth = await authenticate(token)
+    if (!isAuth){
+        return res.status(401).json({
+            message:'Not authorized'
+        })
+    }else if (isAuth === 'isOutDated'){
+        return res.status(401).json({
+            message:'Not authorized'
+        })
+    }
+    const id = req.params.id
+    const {quantity, status} = req.body
+    console.log(req.body)
+    try{
+        const commande = await Commandes.findByPk(id)
+        if (!commande){
+            return res.status(403).json({message:"Cette commande n'existe pas"})
+        }else{
+            commande.quantity = quantity || commande.quantity
+            commande.status = status
+            await commande.save()
+            return res.status(200).json({
+                message:'Le commande a bien été modifié'
+            })
         }
     }catch(error){
         console.log(error)

@@ -14,7 +14,7 @@ export default function Leftbar() {
         <NavLink to='/adminProduct' className="text-xl font-Montserrat text-white w-5/6 h-12 flex justify-start px-4 items-center hover:bg-blue-700">
           Produits
         </NavLink>
-        <NavLink className="text-xl font-Montserrat text-white w-5/6 h-12 flex justify-start px-4 items-center hover:bg-blue-700">
+        <NavLink to='/adminCommandes' className="text-xl font-Montserrat text-white w-5/6 h-12 flex justify-start px-4 items-center hover:bg-blue-700">
           Commandes
         </NavLink>
         <NavLink className="text-xl font-Montserrat text-white w-5/6 h-12 flex justify-start px-4 items-center hover:bg-blue-700">

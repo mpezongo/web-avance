@@ -4,6 +4,8 @@ import AdminProduct from "./pages/adminProduct";
 import AddProduct from "./pages/addProduct";
 import ModifyProduct from "./pages/modifyProduct";
 import AdminDashboard from "./pages/adminDashboard";
+import Commandes from "./pages/commandes";
+import ModifyCommande from "./pages/modifyCommande";
 
 function App() {
   const path = createBrowserRouter([
@@ -26,6 +28,14 @@ function App() {
     {
       path:'/adminDashboard',
       element: <AdminDashboard />
+    },
+    {
+      path:'/adminCommandes',
+      element: <Commandes />
+    },
+    {
+      path:'/modifyCommande',
+      element: <ModifyCommande />
     },
   ])
   return (

@@ -1,10 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Topbar from '../components/Topbar';
 import Leftbar from '../components/Leftbar'
 import icons from '../constants/icons';
 import img from '../constants/images'
+import axios from 'axios';
 
 export default function AdminDashboard() {
+
+    const [commandes, SetCommandes] = useState()
+
+
+    useEffect(() => {
+        const fnc = async() => {
+            try{
+                const res = await axios.get("http://localhost:5000/commandes/all", {
+                    withCredentials:true
+                })
+                setCommandes(res.data)
+            }catch(error){
+
+            }
+        }
+        fnc()
+    }, [])
   return (
     <div className='w-full h-screen relative bg-blue-100 flex'>
         <Leftbar />

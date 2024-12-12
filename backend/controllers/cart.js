@@ -19,7 +19,7 @@ exports.addProduct = async(req, res) => {
     }
     try{
         const productId = req.body.productId
-        const quantity = req.body.quantity
+        const quantity = req.body.quantity || 1
         const userId = isAuth.userId
         const user = await User.findByPk(userId);
         if (!user) {

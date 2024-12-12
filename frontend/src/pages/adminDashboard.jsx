@@ -6,9 +6,41 @@ import img from '../constants/images'
 import axios from 'axios';
 
 export default function AdminDashboard() {
+    const [totalPrice, setTotalPrice] = useState()
+    const [totalQuantity, setTotalQuantity] = useState()
+    const [totalProduct, setTotalProduct] = useState()
+    const [topVentes, setTopVentes] = useState()
 
-    const [commandes, SetCommandes] = useState()
+    const calcul_total_commandes = (data) => {
+        let quantity = 0
+        let totalPrice = 0
+        const quantities = {}
+        // console.log(data)
+        data.forEach(element => {
+            console.log(element)
+            quantity += element.quantity
+            const productId = element.Article.id
+            totalPrice += element.Article.price * quantity
+            const productDetails = element.Article
+            const quant = element.quantity
+            if (quantities[productId]){
+                quantities[productId].quant += element.quantity
+            }else{
+                quantities[productId] = {
+                    ...productDetails,
+                    productId,
+                    quant, 
+                }
 
+            }
+        });
+        setTotalPrice(totalPrice)
+        setTotalQuantity(quantity)
+        const sortedQuantites = Object.keys(quantities)
+            .map(productId => quantities[productId])
+            .sort((a, b) => b.quantity - a.quantity);
+            setTopVentes(sortedQuantites.slice(0, 10));
+    }
 
     useEffect(() => {
         const fnc = async() => {
@@ -16,13 +48,28 @@ export default function AdminDashboard() {
                 const res = await axios.get("http://localhost:5000/commandes/all", {
                     withCredentials:true
                 })
-                setCommandes(res.data)
+                calcul_total_commandes(res.data)
+            }catch(error){
+
+            }
+        }
+        const fnc2 = async() => {
+            try{
+                const res = await axios.get("http://localhost:5000/products/", {
+                    withCredentials:true
+                })
+
+                console.log(res.data)
+                setTotalProduct(res.data.length)
             }catch(error){
 
             }
         }
         fnc()
+        fnc2()
     }, [])
+
+    console.log(topVentes)
   return (
     <div className='w-full h-screen relative bg-blue-100 flex'>
         <Leftbar />
@@ -36,7 +83,7 @@ export default function AdminDashboard() {
                         </div>
                         <div className=' flex flex-col justify-center items-center '>
                             <div className='text-2xl text-blue-500 font-bold font-Montserrat'>
-                                250k
+                                {totalQuantity}
                             </div>
                             <div className='font-light text-black text-md '>
                                 Ventes
@@ -62,7 +109,7 @@ export default function AdminDashboard() {
                         </div>
                         <div className=' flex flex-col justify-center items-center '>
                             <div className='text-2xl text-yellow-500 font-bold font-Montserrat'>
-                                250
+                                {totalProduct}
                             </div>
                             <div className='font-light text-black text-md '>
                                 Produits
@@ -75,10 +122,10 @@ export default function AdminDashboard() {
                         </div>
                         <div className=' flex flex-col justify-center items-center '>
                             <div className='text-2xl text-green-500 font-bold font-Montserrat'>
-                                25m
+                                {totalPrice}$
                             </div>
                             <div className='font-light text-black text-md '>
-                                Produits
+                                Revenue
                             </div>
                         </div>
                     </div>
@@ -107,8 +154,36 @@ export default function AdminDashboard() {
                         </div>
                         <hr className='w-full bg-gray-300'/>
                     </div>
+                    {
+                        topVentes &&
+                        topVentes.map((product, index) => (
+                            <div className='w-full flex flex-col overflow-y-auto'>
+                                <div className='flex justify-between items-center px-2 gap-4 w-full'>
+                                    <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
+                                        <img src={"http://localhost:5000/static/img/"+ (product.img)} alt={product.name} className="w-24 h-24 object-cover" />
+                                    </div>
+                                    <div className='text font-semibold w-[25%] text-start text-bold'>
+                                        {product.name}
+                                    </div>
+                                    <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
+                                        {product.categorie}
+                                    </div>
+                                    <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
+                                    {product.price}
+                                    </div>
+                                    <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
+                                        {product.quant}
+                                    </div>
+                                    <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
+                                        {product.price * product.quant}
+                                    </div>
+                                </div>
+                                <hr className='w-full bg-gray-300'/>
+                            </div>
+                        ))
+                    }
                 </div>
-                <div className='w-full flex justify-center items-center gap-5'>
+                <div className='w-full flex justify-center items-center gap-5 mb-10'>
                     <div className='w-3/5 bg-white h-[300px] rounded-lg p-4'>
                         <div className='w-full text-start font-bold font-Montserrat text-xl'>Notifications</div>
                         <div className='flex flex-col w-full justify-start items-start gap-5 mt-5 overflow-y-auto max-h-[200px]'>

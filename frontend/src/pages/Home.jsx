@@ -6,7 +6,7 @@ export default function Home() {
 
     const handleSend = async() => {
         try{
-            const res = await axios.post("http://localhost:5000/commandes", 
+            const res = await axios.post("http://localhost:5000/users/login", 
               {
                 "username":"mpezongo",
                 "email":"mickael.pezongo@gmail.com",

@@ -51,7 +51,7 @@ export default function AdminProduct() {
             <span className='text-2xl font-semibold font-Montserrat'>Gestion  des produits</span>
             <NavLink to="/addProduct" className='w-[200px] h-12 bg-blue-700 hover:bg-blue-600 text-white font-Montserrat font-bold flex justify-center items-center gap-2 rounded-lg' >
               <MdAddCircleOutline className='text-2xl' />
-              Ajouter un produit
+                Ajouter un produit
             </NavLink>
           </div>
           <div className='w-full bg-white rounded-xl shadow-xs shadow-black'>

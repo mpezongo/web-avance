@@ -99,7 +99,7 @@ export default function ProductPage() {
                     filtedProduct &&
                     filtedProduct.map((product, index) => (
                         <div className='w-[22%] bg-white h-auto rounded-lg flex flex-col'>
-                            <img src={img.apple} alt="" className='w-full h-[300px] object-cover rounded-lg' />
+                            <img src={"http://localhost:5000/static/img/"+product.img} alt="" className='w-full h-[300px] object-contain rounded-lg' />
                             <div className='w-full h-28 bg-blue-800 p-4 overflow-y-auto'>
                                 <h2 className='text-white font-Montserrat font-bold text-2xl'>
                                     {product.price}$

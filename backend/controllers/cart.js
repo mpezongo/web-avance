@@ -19,7 +19,7 @@ exports.addProduct = async(req, res) => {
     }
     try{
         const productId = req.body.productId
-        const quantity = req.body.quantity || 1
+        const quantity = 1
         const userId = isAuth.userId
         const user = await User.findByPk(userId);
         if (!user) {
@@ -90,7 +90,7 @@ exports.modify = async(req, res) => {
         let cartProduct = await CartProducts.findOne({ where: { cartId:cart.id, productId:productId } });
         if (cartProduct) {
             if (cartProduct.quantity === 1){
-                cartProduct.detroy()
+                cartProduct.destroy()
                 return res.status(200).json({
                     message:'Produit supprimer avec succès'
                 })
@@ -129,7 +129,6 @@ exports.deleteProduct = async(req, res) => {
     try{
         const userId = isAuth.userId
         const productId = req.params.productId
-        console.log(productId)
         const user = await User.findByPk(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });

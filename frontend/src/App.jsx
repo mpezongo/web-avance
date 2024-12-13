@@ -1,4 +1,5 @@
 import { createBrowserRouter,RouterProvider } from "react-router-dom";
+
 import Home from "./pages/Home";
 import AdminProduct from "./pages/adminProduct";
 import AddProduct from "./pages/addProduct";
@@ -7,6 +8,7 @@ import AdminDashboard from "./pages/adminDashboard";
 import Commandes from "./pages/commandes";
 import ModifyCommande from "./pages/modifyCommande";
 import ProductPage from "./pages/productPage";
+import Carts from "./pages/carts";
 
 function App() {
   const path = createBrowserRouter([
@@ -41,6 +43,10 @@ function App() {
     {
       path:'/products',
       element: <ProductPage />
+    },
+    {
+      path:'/carts',
+      element: <Carts />
     },
   ])
   return (

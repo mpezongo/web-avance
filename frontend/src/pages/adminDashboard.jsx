@@ -130,58 +130,60 @@ export default function AdminDashboard() {
                         </div>
                     </div>
                 </div>
-                <div className='w-full h-[300px] bg-white rounded-lg p-4 flex justify-start items-center flex-col'>
+                <div className='w-full h-[300px] bg-white rounded-lg p-4 flex justify-start items-center flex-col overflow-y-auto'>
                     <div className='w-full text-start font-bold font-Montserrat text-xl'>Top 10 Ventes</div>
-                    <div className='w-full flex flex-col overflow-y-auto'>
-                        <div className='flex justify-between items-center h-12 px-2 gap-4 w-full'>
-                            <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
-                            </div>
-                            <div className='text-gray-400 font-semibold w-[25%] text-start'>
-                                Nom du produit
-                            </div>
-                            <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
-                            Catégorie
-                            </div>
-                            <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
-                            Prix
-                            </div>
-                            <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
-                                Vente
-                            </div>
-                            <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
-                                Revenue
-                            </div>
-                        </div>
-                        <hr className='w-full bg-gray-300'/>
-                    </div>
-                    {
-                        topVentes &&
-                        topVentes.map((product, index) => (
-                            <div className='w-full flex flex-col overflow-y-auto'>
-                                <div className='flex justify-between items-center px-2 gap-4 w-full'>
-                                    <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
-                                        <img src={"http://localhost:5000/static/img/"+ (product.img)} alt={product.name} className="w-24 h-24 object-cover" />
-                                    </div>
-                                    <div className='text font-semibold w-[25%] text-start text-bold'>
-                                        {product.name}
-                                    </div>
-                                    <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
-                                        {product.categorie}
-                                    </div>
-                                    <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
-                                    {product.price}
-                                    </div>
-                                    <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
-                                        {product.quant}
-                                    </div>
-                                    <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
-                                        {product.price * product.quant}
-                                    </div>
+                    <div className='w-full h-auto justify-start items-center flex flex-col overflow-y-auto'>
+                        <div className='w-full flex flex-col'>
+                            <div className='flex justify-between items-center h-12 px-2 gap-4 w-full'>
+                                <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
                                 </div>
-                                <hr className='w-full bg-gray-300'/>
+                                <div className='text-gray-400 font-semibold w-[25%] text-start'>
+                                    Nom du produit
+                                </div>
+                                <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
+                                Catégorie
+                                </div>
+                                <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
+                                Prix
+                                </div>
+                                <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
+                                    Vente
+                                </div>
+                                <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
+                                    Revenue
+                                </div>
                             </div>
-                        ))
-                    }
+                            <hr className='w-full bg-gray-300'/>
+                        </div>
+                        {
+                            topVentes &&
+                            topVentes.map((product, index) => (
+                                <div className='w-full flex flex-col h-auto'>
+                                    <div className='flex justify-between items-center px-2 gap-4 w-full h-24'>
+                                        <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
+                                            <img src={"http://localhost:5000/static/img/"+ (product.img)} alt={product.name} className="w-20 h-16 object-contain" />
+                                        </div>
+                                        <div className='text font-semibold w-[25%] text-start text-bold'>
+                                            {product.name}
+                                        </div>
+                                        <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
+                                            {product.categorie}
+                                        </div>
+                                        <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
+                                        {product.price}
+                                        </div>
+                                        <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
+                                            {product.quant}
+                                        </div>
+                                        <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
+                                            {product.price * product.quant}
+                                        </div>
+                                    </div>
+                                    <hr className='w-full bg-gray-300'/>
+                                </div>
+                            ))
+                        }
+                    </div>
                 </div>
                 <div className='w-full flex justify-center items-center gap-5 mb-10'>
                     <div className='w-3/5 bg-white h-[300px] rounded-lg p-4'>

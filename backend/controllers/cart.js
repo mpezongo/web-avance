@@ -49,6 +49,7 @@ exports.addProduct = async(req, res) => {
                 quantity:quantity
             });
         }
+        
         return res.status(200).json({
             message:'Produit ajoutée au panier avec succès'
         })
@@ -182,9 +183,7 @@ exports.getCart = async(req, res) => {
 
         const cart = await Cart.findOne({where:{userId:user.id}});
         if (!cart){
-            res.status(404).json({
-                message:'Votre panier est vide'
-            })
+            return res.status(200).json([])
         }
 
         const cartProducts = await CartProducts.findAll({where:{cartId:cart.id},
@@ -193,7 +192,7 @@ exports.getCart = async(req, res) => {
                 attributes: ['id', 'name', 'price', 'img']
             }]
         })
-        res.status(200).json(cartProducts);
+        return res.status(200).json(cartProducts);
     }catch(error){
         console.log(error)
         return res.status(500).json({

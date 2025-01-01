@@ -4,6 +4,7 @@ const authenticate = require('./authenticate')
 const User = db.user
 const Commandes = db.commandes
 const Product = db.product
+const Cart = db.cart
 
 exports.addCommande = async(req, res) => {
     const token = req.cookies.token
@@ -14,12 +15,14 @@ exports.addCommande = async(req, res) => {
         })
     }else if (isAuth === 'isOutDated'){
         return res.status(401).json({
-            message:'Not authorized'
+            message:'Not authorized etghrt'
         })
     }
     try{
         const items = req.body.items
         const productIds = items.map(item => item.productId);
+        const cartId = req.body.cartId
+        console.log(cartId)
         const products = await Product.findAll({
             where: { id: productIds },
         });
@@ -35,9 +38,16 @@ exports.addCommande = async(req, res) => {
             quantity:item.quantity
         }))
         await Commandes.bulkCreate(commandes)
-        res.status(200).json({message:'Votre commande a bien été placée'})
+        const cart = await Cart.findOne({where:{id:cartId}});
+        if (cart){
+            cart.destroy()
+        }else{
+            console.log("kjladshvjfdhljkvbfjk")
+        }
+        return res.status(200).json({message:'Votre commande a bien été placée'})
     }catch(error) {
-        res.status(500).json({message:'Une erreur s\'est produite'})
+        console.log(error)
+        return res.status(500).json({message:'Une erreur s\'est produite'})
     }
 }
 
@@ -94,13 +104,19 @@ exports.getCommandeByUser = async(req, res) => {
     }
 
     try{
-        const commandes = await Commandes.findAll({where:{userId:isAuth.userId}})
+        const commandes = await Commandes.findAll(
+            {
+                where:{userId:isAuth.userId},
+                include:[{
+                    model:Product
+                }]
+            },
+        )
         res.status(200).json(commandes)
     }catch(error){
         console.log(error)
     }
 }
-
 
 exports.deleteCommande = async(req, res) => {
     const token = req.cookies.token
@@ -118,7 +134,12 @@ exports.deleteCommande = async(req, res) => {
     try{
         const productId = req.params.id
         console.log(productId)
-        const commande = await Commandes.findOne({where:{userId:isAuth.userId, productId:productId}})
+        let commande;
+        if (isAuth.role === "admin"){
+            commande = await Commandes.findOne({where:{productId:productId}})
+        }else{
+            commande = await Commandes.findOne({where:{userId:isAuth.userId, productId:productId}})
+        }
         if (commande){
             commande.destroy()
             res.status(200).json({message:'Commandes supprimée avec succès'})

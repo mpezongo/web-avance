@@ -5,10 +5,11 @@ import AdminProduct from "./pages/adminProduct";
 import AddProduct from "./pages/addProduct";
 import ModifyProduct from "./pages/modifyProduct";
 import AdminDashboard from "./pages/adminDashboard";
-import Commandes from "./pages/commandes";
+import AdminCommandes from "./pages/adminCommandes";
 import ModifyCommande from "./pages/modifyCommande";
 import ProductPage from "./pages/productPage";
 import Carts from "./pages/carts";
+import Commandes from "./pages/commandes";
 
 function App() {
   const path = createBrowserRouter([
@@ -34,7 +35,7 @@ function App() {
     },
     {
       path:'/adminCommandes',
-      element: <Commandes />
+      element: <AdminCommandes />
     },
     {
       path:'/modifyCommande',
@@ -47,6 +48,10 @@ function App() {
     {
       path:'/carts',
       element: <Carts />
+    },
+    {
+      path:'/commandes',
+      element: <Commandes />
     },
   ])
   return (

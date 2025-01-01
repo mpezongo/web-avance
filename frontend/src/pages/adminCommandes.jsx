@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Leftbar from '../components/Leftbar'
 import { MdAddCircleOutline } from "react-icons/md";
@@ -6,9 +6,10 @@ import Topbar from '../components/Topbar';
 import { NavLink } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-export default function Commandes() {
+export default function AdminCommandes() {
 
-const queryClient = useQueryClient()
+
+  const queryClient = useQueryClient()
   const [delSuccess, setDelSuccess] = useState()
 
   const commandesData = useQuery(['commandesData'], async() => {
@@ -38,8 +39,6 @@ const queryClient = useQueryClient()
     }
   )
 
-  console.log(delSuccess)
-
 
   return (
     <div className='w-screen h-auto relative bg-blue-100 flex'>
@@ -54,25 +53,24 @@ const queryClient = useQueryClient()
               Ajouter un produit
             </NavLink>
           </div>
-          {
-            delSuccess &&
-            <div className='w-full text-green-500'>
-                {delSuccess}
-            </div>
-          }
           <div className='w-full bg-white rounded-xl shadow-xs shadow-black overflow-y-auto mb-10'>
             <div className='flex justify-between items-center h-12 px-2 gap-4'>
-              <div className='text-gray-400 font-semibold text-start font-Montserrat w-[40%]'>
+              <div className='text-gray-400 font-semibold w-[25%] text-start'>
+                Clients
+              </div>
+              <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
                 Produits
               </div>
-              <div className='text-gray-400 font-semibold text-start font-Montserrat w-[20%]'>
+              <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
                 Quantity
               </div>
-              <div className='text-gray-400 font-semibold text-start font-Montserrat w-[20%]'>
+              <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
                 Etat
               </div>
-              <div className='text-gray-400 font-semibold text-start font-Montserrat w-[20%]'>
+              <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
                 Actions
+              </div>
+              <div className='text-gray-400 font-semibold text-start font-Montserrat w-[15%]'>
               </div>
             </div>
             <hr className='w-full bg-gray-300'/>
@@ -85,28 +83,24 @@ const queryClient = useQueryClient()
               commandesData.data && commandesData.data.map((commande, index) => 
                 <div key={index}>
                   <div className='flex justify-between items-center h-16 px-2 gap-4'>
-                    {/* <div className='font-bold w-[25%] text-start'>
+                    <div className='font-bold w-[25%] text-start'>
                       {commande.User.username}
-                    </div> */}
-                    <div className='text-start font-Montserrat w-[40%]'>
+                    </div>
+                    <div className='text-start font-Montserrat w-[15%]'>
                       {commande.Article.name}
                     </div>
-                    <div className='text-start font-Montserrat w-[20%]'>
+                    <div className='text-start font-Montserrat w-[15%]'>
                       {commande.quantity} 
                     </div>
-                    <div className='text-start font-Montserrat w-[20%]'>
+                    <div className='text-start font-Montserrat w-[15%]'>
                       {commande.status}
                     </div>
-                    {
-                        commande.status === 'processing' ?
-                        <button onClick={() => delMutation.mutate(commande.Article.id)}  className='text-red-500 font-semibold text-start font-Montserrat w-[20%]'>
-                        Supprimer
-                        </button>
-                        :
-                        <button disabled className='text-red-500 font-semibold text-start font-Montserrat w-[20%]'>
-                        
-                        </button>
-                    }
+                    <NavLink to={"/modifyCommande?commandeId=" + commande.id} className='text-blue-600 font-semibold text-start font-Montserrat w-[15%]'>
+                      Editer
+                    </NavLink>
+                    <button onClick={() => delMutation.mutate(commande.Article.id)}  className='text-red-500 font-semibold text-start font-Montserrat w-[15%]'>
+                      Supprimer
+                    </button>
                   </div>
                   <hr className='w-full bg-gray-300'/>
                 </div>

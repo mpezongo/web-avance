@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import LeftbarUser from '../components/LeftbarUser'
 import Topbar from '../components/Topbar'
-import { NavLink } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import axios from 'axios';
 import icons from '../constants/icons';
@@ -58,8 +57,28 @@ export default function Carts() {
       }
     )
 
+    const commandeMutation = useMutation(
+      async(ras) => {
+        const res = await axios.post("http://localhost:5000/commandes", {
+          items:cartData.data.map(product => {
+            return {
+              productId:product.Article.id,
+              quantity:product.quantity,
+            }
+          }),
+          cartId:cartData.data[0].cartId
+        },{
+          withCredentials:true
+        })
 
-    console.log(totalPrice)
+        console.log(res)
+      },
+      {
+        onSuccess:() =>{
+          queryClient.invalidateQueries(['cartData'])
+        }
+      }
+    )
 return (
     <div className='w-full h-screen relative bg-blue-100 flex'>
         <LeftbarUser />
@@ -95,7 +114,7 @@ return (
                     :cartData.isError ?<div className='flex justify-between items-center h-16 px-2 gap-4'>
                         Error
                       </div>:
-                  cartData.data.map((product, index) => 
+                  cartData.data && cartData.data.map((product, index) => 
                     <div key={index}>
                       <div className='flex justify-between items-center h-32 px-2 gap-4'>
                         <div className='text-gray-400 font-semibold w-[20%] text-start'>
@@ -138,7 +157,7 @@ return (
                     
                   </div>
                   <div className='text-gray-400 font-semibold text-start font-Montserrat w-[20%] flex justify-start items-center'>
-                    <button className='text-white bg-green-500 h-10 font-semibold text-start font-Montserrat w-[200px] flex justify-center items-center rounded-lg'>
+                    <button onClick={() => commandeMutation.mutate()} className='text-white bg-green-500 h-10 font-semibold text-start font-Montserrat w-[200px] flex justify-center items-center rounded-lg'>
                       Commander
                     </button>
                   </div>

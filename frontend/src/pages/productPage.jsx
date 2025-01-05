@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import LeftbarUser from '../components/LeftbarUser'
-import img from '../constants/images'
 import { IoIosNotificationsOutline, IoIosArrowDown  } from "react-icons/io";
 
 export default function ProductPage() {
+
+    const [userData] = useState(() => {
+        const user = localStorage.getItem("user");
+        return user ? JSON.parse(user) : null; // Parser la chaîne JSON si elle existe
+    });
+
     const [products, setProducts] = useState()
     const [filtedProduct, setFiltredProduct] = useState()
     const [searchText, setSearchText] = useState()
@@ -37,6 +42,9 @@ export default function ProductPage() {
         }
     }
     useEffect(() => {
+        if (!userData) {
+            return window.location.href = '/login'
+        }
         const fnc = async() => {
           try{
             const res = await axios.get("http://localhost:5000/products", {
@@ -46,12 +54,12 @@ export default function ProductPage() {
             setProducts(res.data)
             setFiltredProduct(res.data)
           }catch(error){
-            console.log(error)
+            
           }
         }
     
         fnc()
-    }, [])
+    }, [userData])
 
     const addCart = async(productId) => {
         try{
@@ -81,7 +89,7 @@ export default function ProductPage() {
 
                     </div>
                     <div className='font-Montserrat font-bold font-xl'>
-                        John Doe
+                        {userData?.username}
                     </div>
                     <IoIosArrowDown />
                 </div>

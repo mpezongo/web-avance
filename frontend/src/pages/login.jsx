@@ -12,12 +12,14 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       const res = await axios.post('http://localhost:5000/users/login', {
-        email,
+        username:email,
         password,
       }, { withCredentials: true });
-      console.log(res.data);
-      navigate('/products'); // Redirect to dashboard or another protected route
+      localStorage.setItem('user', JSON.stringify(res.data));
+      console.log(res);
+      navigate('/products');
     } catch (err) {
+      console.log(err)
       setError(err.response?.data?.message || 'An error occurred');
     }
   };

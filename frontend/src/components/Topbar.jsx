@@ -1,8 +1,18 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { CiSearch } from "react-icons/ci";
 import { IoIosNotificationsOutline, IoIosArrowDown  } from "react-icons/io";
 
 export default function Topbar() {
+  const [userData] = useState(() => {
+      const user = localStorage.getItem("user");
+      return user ? JSON.parse(user) : null; // Parser la chaîne JSON si elle existe
+    });
+
+  if (!userData) {
+    return window.location.href = '/login'
+  }
+
+  console.log(userData)
   return (
     <div className='bg-white w-full h-auto py-4 flex justify-between px-4 items-center'>
         <div className='w-[400px] h-12 border-[1px] rounded-lg border-gray-300 flex justify-between items-center px-4'>
@@ -15,7 +25,7 @@ export default function Topbar() {
 
         </div>
         <div className='font-Montserrat font-bold font-xl'>
-            John Doe
+            {userData.username}
         </div>
         <IoIosArrowDown />
         </div>

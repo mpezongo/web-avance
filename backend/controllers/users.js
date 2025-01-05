@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const authenticate = require('./authenticate')
 
 const db = require("../models/db");
-const { where, AsyncQueueError } = require('sequelize');
+const { where, AsyncQueueError, Op } = require('sequelize');
 const User = db.user
 const Session = db.session
 
@@ -72,7 +72,14 @@ exports.login = async(req, res) => {
         return;
     }
     try{
-        const user = await User.findOne({where:{username}})
+        const user = await User.findOne({
+            where: {
+                [Op.or]: [
+                  { username: username },
+                  { email: username }
+                ]
+              }
+        })
         if (!user){
             return res.status(404).json({message:"User not found"})
         }

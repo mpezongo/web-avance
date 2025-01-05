@@ -10,6 +10,8 @@ import ModifyCommande from "./pages/modifyCommande";
 import ProductPage from "./pages/productPage";
 import Carts from "./pages/carts";
 import Commandes from "./pages/commandes";
+import LoginPage from "./pages/login";
+import SignupPage from "./pages/signUp";
 
 function App() {
   const path = createBrowserRouter([
@@ -52,6 +54,14 @@ function App() {
     {
       path:'/commandes',
       element: <Commandes />
+    },
+    {
+      path:'/login',
+      element: <LoginPage />
+    },
+    {
+      path:'/signup',
+      element: <SignupPage />
     },
   ])
   return (

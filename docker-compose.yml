@@ -10,10 +10,10 @@ services:
       - ./backend:/app
       - /app/node_modules
     environment:
-      - DB_HOST=mysql
-      - DB_USER=mick
-      - DB_PASSWORD=root
-      - DB_NAME=commerce
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
     depends_on:
       - mysql
 
@@ -21,7 +21,7 @@ services:
     build:
       context: ./frontend
     ports:
-      - "5002:3000"
+      - "3000:3000"
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -33,12 +33,12 @@ services:
   mysql:
     image: mysql:8.0
     ports:
-      - "5001:3306"
+      - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: 'root'
-      MYSQL_DATABASE: 'commerce'
-      MYSQL_USER: 'mick'
-      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
 

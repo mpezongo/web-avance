@@ -18,13 +18,13 @@ export default function SignupPage() {
       return;
     }
     try {
-      const res = await axios.post('http://localhost:5000/signup', {
+      const res = await axios.post('http://localhost:5000/users/register', {
         username,
         email,
         password,
       });
       setSuccess('Account created successfully! Redirecting to login...');
-      setTimeout(() => navigate('/login'), 3000); // Redirect to login after 3 seconds
+      setTimeout(() => navigate('/login'), 3000);
     } catch (err) {
       setError(err.response?.data?.message || 'An error occurred');
     }

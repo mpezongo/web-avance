@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import Leftbar from '../components/Leftbar'
 import { MdAddCircleOutline } from "react-icons/md";
 import Topbar from '../components/Topbar';
 import { NavLink } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import LeftbarUser from '../components/LeftbarUser';
 
 export default function Commandes() {
 
@@ -19,7 +19,6 @@ const queryClient = useQueryClient()
     
         return res.data
       }catch(error){
-        console.log(error)
       }
   })
 
@@ -38,12 +37,9 @@ const queryClient = useQueryClient()
     }
   )
 
-  console.log(delSuccess)
-
-
   return (
     <div className='w-screen h-auto relative bg-blue-100 flex'>
-      <Leftbar />
+      <LeftbarUser />
       <div className='w-5/6  relative h-screen flex flex-col justify-start items-center bg-blue-100 overflow-y-auto'>
         <Topbar />
         <div className='w-[95%] h-auto mt-10 flex flex-col gap-10'>

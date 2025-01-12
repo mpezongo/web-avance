@@ -17,7 +17,7 @@ function App() {
   const path = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
+      element: <LoginPage />,
     },
     {
       path:'/adminProduct',

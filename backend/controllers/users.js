@@ -129,9 +129,9 @@ exports.logout = async (req, res) => {
         message:'Please relogin'
     })}
 
-    res.clearCookie("token")
     const session = await Session.findOne({where:{token}})
     await session.destroy()
+    res.clearCookie("token")
     return res.status(200).json({message:"Deconnexion reussie"})
 }
 

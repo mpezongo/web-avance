@@ -14,7 +14,7 @@ export default function AdminCommandes() {
 
   const commandesData = useQuery(['commandesData'], async() => {
       try{
-        const res = await axios.get("http://localhost:5000/commandes/", {
+        const res = await axios.get("http://localhost:5000/commandes/all", {
           withCredentials:true
         })
     
@@ -38,7 +38,6 @@ export default function AdminCommandes() {
         
     }
   )
-
 
   return (
     <div className='w-screen h-auto relative bg-blue-100 flex'>

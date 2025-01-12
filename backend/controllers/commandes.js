@@ -185,6 +185,11 @@ exports.updateCommande = async(req, res) => {
             message:'Not authorized'
         })
     }
+    if (isAuth.role !== 'admin'){
+        return res.status(403).json({
+            message:'Forbidden action'
+        })
+    }
     const id = req.params.id
     const {quantity, status} = req.body
     console.log(req.body)
@@ -195,6 +200,11 @@ exports.updateCommande = async(req, res) => {
         }else{
             commande.quantity = quantity || commande.quantity
             commande.status = status
+            if (commande.status === 'completed'){
+                const product = await Product.findByPk(commande.productId)
+                product.stock = product.stock - (quantity || commande.quantity)
+                await product.save()
+            }
             await commande.save()
             return res.status(200).json({
                 message:'Le commande a bien été modifié'

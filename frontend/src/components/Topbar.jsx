@@ -11,8 +11,6 @@ export default function Topbar() {
   if (!userData) {
     return window.location.href = '/login'
   }
-
-  console.log(userData)
   return (
     <div className='bg-white w-full h-auto py-4 flex justify-between px-4 items-center'>
         <div className='w-[400px] h-12 border-[1px] rounded-lg border-gray-300 flex justify-between items-center px-4'>

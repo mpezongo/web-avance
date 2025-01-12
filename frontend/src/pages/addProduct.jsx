@@ -9,6 +9,7 @@ import icons from '../constants/icons'
 export default function AddProduct() {
 
     const [productImg, setProductImg] = useState()
+    const [ok, setOkay] = useState()
     const [productData, setProductData] = useState({
         name:"",
         price:"",
@@ -68,7 +69,7 @@ export default function AddProduct() {
                 productData
             }, {withCredentials:true})
 
-            console.log(res)
+            setOkay(res.data.message)
         }catch(error){
             console.log(error)
         }
@@ -79,6 +80,7 @@ export default function AddProduct() {
         <div className='w-4/5 relative h-auto flex flex-col justify-start items-center bg-blue-100 overflow-y-auto'>
             <Topbar />
             <div className='w-[700px] bg-white h-auto mt-10 rounded-xl p-12 mb-10'>
+                {ok && <div className='text-green-500'>{ok}</div>}
                 <div className='flex justify-between items-center h-24 '>
                     <span className='font-bold text-xl font-Montserrat'>Ajout d'un nouveau produit</span>
                     <NavLink to="/adminProduct" className="flex gap-2 justify-center items-center text-blue-600 rounded-lg h-12 px-2 duration-150 hover:bg-gray-100">
@@ -103,7 +105,7 @@ export default function AddProduct() {
                             <option value="">Selectionner une catégorie</option>
                             <option value="Téléphone">Téléphone</option>
                             <option value="Ordinateur">Ordinateur</option>
-                            <option value="Accessoires">Selectionner une catégorie</option>
+                            <option value="Accessoires">Accessoires</option>
                         </select>
                     </label>
                     <label htmlFor="price" className='flex flex-col justify-center items-start gap-1 font-semibold'>

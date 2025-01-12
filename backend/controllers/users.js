@@ -1,13 +1,14 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const authenticate = require('./authenticate')
 
 const db = require("../models/db");
 const { where, AsyncQueueError, Op } = require('sequelize');
+const session = require('../models/session');
 const User = db.user
 const Session = db.session
 
-const createSession = async (userId, token) => {
+const createSession = async (userId, role, token) => {
     try {
         const expirationDate = new Date();
         expirationDate.setHours(expirationDate.getHours() + 24);
@@ -15,7 +16,7 @@ const createSession = async (userId, token) => {
             userId,
             token,
             expirationDate: expirationDate, // 24 heure à partir de maintenant
-            role:'admin'
+            role:role
         });
     } catch (error) {
       console.error('Erreur lors de la création de la session:', error);
@@ -32,7 +33,14 @@ exports.register = async (req, res) => {
         return;
     }
     try {
-        const existingUser = await User.findOne({where:{email}})
+        const existingUser = await User.findOne({
+            where: {
+                [Op.or]: [
+                  { username: username },
+                  { email: email }
+                ]
+              }
+        })
 
         if (existingUser){
             return res.status(400).json({message:"User already exist"})
@@ -85,7 +93,6 @@ exports.login = async(req, res) => {
         }
         const isPasswordValid = await bcrypt.compare(password, user.password)
         if (!isPasswordValid){
-            console.log("mot de passe incorrect")
             return res.status(401).json({message:"Email ou mot de passe incorrect"})
         }
 
@@ -95,7 +102,7 @@ exports.login = async(req, res) => {
             {expiresIn: "1D"}
         )
 
-        await createSession(user.id, token)
+        await createSession(user.id, user.role, token)
 
         res.cookie("token", token, {
             httpOnly: true,
@@ -123,5 +130,48 @@ exports.logout = async (req, res) => {
     })}
 
     res.clearCookie("token")
+    const session = await Session.findOne({where:{token}})
+    await session.destroy()
     return res.status(200).json({message:"Deconnexion reussie"})
+}
+
+exports.verify_admin = async (req, res) => {
+    const token = req.cookies.token
+    const isAuth = await authenticate(token)
+    if (!isAuth) {return res.status(401).json({
+        message:"Not authorized"
+    })}
+    else if (isAuth === "isOutDated") {return res.status(401).json({
+        message:'Please relogin'
+    })}
+
+    if (isAuth.role === "admin"){
+        return res.status(200).json({
+            message:"Authorized"
+        })
+    }else{
+        return res.status(401).json({
+            message:"Not authorized"
+        })
+    }
+}
+
+exports.getUsers = async (req, res) => {
+    const token = req.cookies.token
+    const isAuth = await authenticate(token)
+    if (!isAuth) {return res.status(401).json({
+        message:"Not authorized"
+    })}
+    else if (isAuth === "isOutDated") {return res.status(401).json({
+        message:'Please relogin'
+    })}
+
+    if (isAuth.role === "admin"){
+        const users = await User.findAll()
+        return res.status(200).json({userNbr:users.length - 1})
+    }else{
+        return res.status(401).json({
+            message:"Not authorized"
+        })
+    }
 }

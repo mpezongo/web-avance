@@ -13,6 +13,11 @@ exports.addProductImg = async(req, res) => {
             message:'Not authorized'
         })
     }
+    if (isAuth.role !== 'admin'){
+        return res.status(403).json({
+            message:'Forbidden action'
+        })
+    }
     const productImg = req.file;
     res.status(200).json({
         productImg: productImg.filename,

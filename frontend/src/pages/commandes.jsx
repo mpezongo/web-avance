@@ -43,13 +43,6 @@ const queryClient = useQueryClient()
       <div className='w-5/6  relative h-screen flex flex-col justify-start items-center bg-blue-100 overflow-y-auto'>
         <Topbar />
         <div className='w-[95%] h-auto mt-10 flex flex-col gap-10'>
-          <div className='w-full justify-between flex items-center h-12'>
-            <span className='text-2xl font-semibold font-Montserrat'>Gestion  des produits</span>
-            <NavLink to="/addProduct" className='w-[200px] h-12 bg-blue-700 hover:bg-blue-600 text-white font-Montserrat font-bold flex justify-center items-center gap-2 rounded-lg' >
-              <MdAddCircleOutline className='text-2xl' />
-              Ajouter un produit
-            </NavLink>
-          </div>
           {
             delSuccess &&
             <div className='w-full text-green-500'>

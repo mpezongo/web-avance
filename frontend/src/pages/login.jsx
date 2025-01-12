@@ -31,7 +31,7 @@ export default function LoginPage() {
         {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
         <form onSubmit={handleLogin} className="flex flex-col space-y-4">
           <input
-            type="email"
+            type="text"
             placeholder="Email"
             className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:border-blue-500"
             value={email}

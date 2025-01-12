@@ -10,6 +10,7 @@ export default function AdminDashboard() {
     const [totalQuantity, setTotalQuantity] = useState()
     const [totalProduct, setTotalProduct] = useState()
     const [topVentes, setTopVentes] = useState()
+    const [userNbr, setUserNbr] = useState()
 
     const calcul_total_commandes = (data) => {
         let quantity = 0
@@ -65,8 +66,20 @@ export default function AdminDashboard() {
 
             }
         }
+
+        const fnc3 = async() => {
+            try{
+                const res = await axios.get("http://localhost:5000/users/", {
+                    withCredentials:true
+                })
+                setUserNbr(res.data.userNbr)
+            }catch(error){
+
+            }
+        }
         fnc()
         fnc2()
+        fnc3()
     }, [])
 
     console.log(topVentes)
@@ -96,7 +109,7 @@ export default function AdminDashboard() {
                         </div>
                         <div className=' flex flex-col justify-center items-center '>
                             <div className='text-2xl text-orange-500 font-bold font-Montserrat'>
-                                3m
+                                {userNbr}
                             </div>
                             <div className='font-light text-black text-md '>
                                 Clients

@@ -27,7 +27,7 @@ const storageFile = multer.diskStorage({
   },
 });
 
-db.sequelize.sync()
+db.sequelize.sync({ force: false, alter: true })
   .then(() => {
     console.log('Base de données synchronisée.');
   })

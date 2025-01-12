@@ -44,7 +44,7 @@ export default function AdminProduct() {
   return (
     <div className='w-screen h-auto relative bg-blue-100 flex'>
       <Leftbar />
-      <div className='w-5/6  relative h-screen flex flex-col justify-start items-center bg-blue-100'>
+      <div className='w-5/6  relative h-screen flex flex-col justify-start items-center bg-blue-100 overflow-y-auto'>
         <Topbar />
         <div className='w-[95%] h-auto mt-10 flex flex-col gap-10'>
           <div className='w-full justify-between flex items-center h-12'>
